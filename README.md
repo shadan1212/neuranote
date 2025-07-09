@@ -1,4 +1,4 @@
-# 📚 NeuroNote - An AI Based Second Brain
+# 📚 NeuraNote - An AI Based Second Brain
 
 ## 🛠️ Tech Stack
 
