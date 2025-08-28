@@ -29,15 +29,15 @@ export const getMemories = async (req: Request, res: Response) => {
 // @route   POST /api/memories
 // @access  Private
 export const createMemory = async (req: Request, res: Response) => {
-  const { title, type, content, tags, folder } = req.body;
+  const { type, url, title, description, tags } = req.body;
 
   try {
     const memory = new Memory({
-      title,
       type,
-      content,
+      url,
+      title,
+      description,
       tags: tags || [],
-      folder: folder || null,
       user: req.user?._id,
     });
 
@@ -56,12 +56,11 @@ export const updateMemory = async (req: Request, res: Response) => {
     const memory = await Memory.findById(req.params.id);
 
     if (memory && memory.user.toString() === req.user?._id.toString()) {
-      memory.title = req.body.title || memory.title;
       memory.type = req.body.type || memory.type;
-      memory.content = req.body.content || memory.content;
+      memory.url = req.body.url || memory.url;
+      memory.title = req.body.title || memory.title;
+      memory.description = req.body.description || memory.description;
       memory.tags = req.body.tags !== undefined ? req.body.tags : memory.tags;
-      memory.folder =
-        req.body.folder !== undefined ? req.body.folder : memory.folder;
 
       const updatedMemory = await memory.save();
       res.json(updatedMemory);

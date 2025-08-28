@@ -1,38 +1,38 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { string } from "zod";
 
 export interface IMemory extends Document {
+  type: "note" | "youtube" | "tweet" | "blog" | "resource";
+  url?: string;
   title: string;
-  type: "link" | "note";
-  content: string;
+  description?: string;
   tags: string[];
-  folder?: mongoose.Schema.Types.ObjectId;
   user: mongoose.Schema.Types.ObjectId;
 }
 
 const memorySchema: Schema = new Schema(
   {
+    type: {
+      type: String,
+      enum: ["note", "youtube", "tweet", "blog", "resource"],
+      required: true,
+    },
+    url: {
+      type: String,
+    },
     title: {
       type: String,
       required: true,
       trim: true,
     },
-    type: {
+    description: {
       type: String,
-      enum: ["link", "note"],
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
     },
     tags: {
       type: [String],
       default: [],
     },
-    folder: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Folder",
-    },
+
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
