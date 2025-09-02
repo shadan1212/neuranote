@@ -1,4 +1,5 @@
 import { BrainCircuit } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -8,9 +9,11 @@ const Navbar = () => {
           <BrainCircuit className="w-5 h-5 font-normal" />
           <span className="text-xl font-medium">NeuraNote</span>
         </div>
-        <button className="cursor-pointer rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-medium text-white shadow-md hover:bg-emerald-600 transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm">
-          SignIn
-        </button>
+        <Link to={"/login"}>
+          <button className="cursor-pointer rounded-md bg-emerald-500 px-3 py-1.5 text-xs font-medium text-white shadow-md hover:bg-emerald-600 transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm">
+            SignIn
+          </button>
+        </Link>
       </nav>
     </div>
   );
