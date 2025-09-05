@@ -8,17 +8,7 @@ export const getMemories = async (req: Request, res: Response) => {
   try {
     const query: any = { user: req.user?._id };
 
-    if (req.query.folderId) {
-      query.folder = req.query.folderId;
-    }
-
-    if (req.query.tag) {
-      query.tags = { $in: [req.query.tag] };
-    }
-
-    const memories = await Memory.find(query)
-      .populate("folder", "name")
-      .sort({ createdAt: -1 });
+    const memories = await Memory.find(query).sort({ createdAt: -1 });
     res.json(memories);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
@@ -38,12 +28,13 @@ export const createMemory = async (req: Request, res: Response) => {
       title,
       description,
       tags: tags || [],
-      user: req.user?._id,
+      user: req.user?._id || "68b5b87a80f74686d61b5be2",
     });
 
     const createdMemory = await memory.save();
     res.status(201).json(createdMemory);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "Could not create memory" });
   }
 };

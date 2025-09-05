@@ -14,7 +14,7 @@ const memorySchema: Schema = new Schema(
   {
     type: {
       type: String,
-      enum: ["note", "youtube", "tweet", "blog", "resource"],
+      enum: ["Videos", "Youtubes", "Posts", "Blogs", "Notes", "Ideas"],
       required: true,
     },
     url: {

@@ -1,5 +1,25 @@
+import { useEffect } from "react";
+import AiSection from "../components/layout/AiSection";
+import MainContentArea from "../components/layout/MainContentArea";
+import Sidebar from "../components/layout/Sidebar";
+import { useMemoryStore } from "../store/memoryStore";
+
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  const { fetchMemories } = useMemoryStore();
+
+  useEffect(() => {
+    fetchMemories();
+  }, [fetchMemories]);
+
+  return (
+    <div className="font-mono h-screen overflow-hidden bg-slate-50 text-slate-800">
+      <div className="flex h-full">
+        <Sidebar />
+        <MainContentArea />
+        <AiSection />
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;
