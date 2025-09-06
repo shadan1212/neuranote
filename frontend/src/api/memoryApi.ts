@@ -9,7 +9,7 @@ export const getMemories = async (): Promise<IMemory[]> => {
 export const createMemory = async (
   memoryData: CreateMemoryData
 ): Promise<IMemory> => {
-  const response = await api.post("/", memoryData);
+  const response = await api.post("/memory/", memoryData);
   return response.data;
 };
 

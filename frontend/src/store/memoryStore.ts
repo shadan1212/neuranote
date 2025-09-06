@@ -13,6 +13,9 @@ interface MemoryState {
   isLoading: boolean;
   error: string | null;
   activeFilter: string;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
   setFilter: (filter: string) => void;
   fetchMemories: () => Promise<void>;
   addMemory: (memoryData: CreateMemoryData) => Promise<void>;
@@ -28,9 +31,14 @@ export const useMemoryStore = create<MemoryState>()(
       isLoading: false,
       error: null,
       activeFilter: "All",
+      isModalOpen: false,
 
       // Actions
       setFilter: (filter) => set({ activeFilter: filter }),
+
+      openModal: () => set({ isModalOpen: true }),
+
+      closeModal: () => set({ isModalOpen: false }),
 
       fetchMemories: async () => {
         set({ isLoading: true, error: null });

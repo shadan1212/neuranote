@@ -3,6 +3,7 @@ import AiSection from "../components/layout/AiSection";
 import MainContentArea from "../components/layout/MainContentArea";
 import Sidebar from "../components/layout/Sidebar";
 import { useMemoryStore } from "../store/memoryStore";
+import AddMemoryModal from "../components/AddMemoryModal";
 
 const Dashboard = () => {
   const { fetchMemories } = useMemoryStore();
@@ -17,6 +18,7 @@ const Dashboard = () => {
         <Sidebar />
         <MainContentArea />
         <AiSection />
+        <AddMemoryModal />
       </div>
     </div>
   );

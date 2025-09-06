@@ -4,11 +4,11 @@ export interface User {
   email: string;
 }
 
-export type MemoryType = "Videos" | "Tweets" | "Blogs" | "Notes" | "Ideas";
+export type MemoryType = "Videos" | "Posts" | "Blogs" | "Notes" | "Ideas";
 
 export interface IMemory {
   _id: string;
-  type: MemoryType;
+  type: MemoryType | string;
   url?: string;
   title: string;
   description?: string;
