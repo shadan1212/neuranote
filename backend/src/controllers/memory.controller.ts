@@ -20,7 +20,6 @@ export const getMemories = async (req: Request, res: Response) => {
 // @access  Private
 export const createMemory = async (req: Request, res: Response) => {
   const { type, url, title, description, tags } = req.body;
-
   try {
     const memory = new Memory({
       type,
@@ -28,7 +27,7 @@ export const createMemory = async (req: Request, res: Response) => {
       title,
       description,
       tags: tags || [],
-      user: req.user?._id || "68b5b87a80f74686d61b5be2",
+      user: req.user?._id,
     });
 
     const createdMemory = await memory.save();
