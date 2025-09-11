@@ -15,9 +15,7 @@ export const createMemorySchema = z.object({
 
 export const updateMemorySchema = z.object({
   body: z.object({
-    type: z
-      .enum(["Videos", "Youtubes", "Tweets", "Blogs", "Notes", "Ideas"])
-      .optional(),
+    type: z.enum(["Videos", "Posts", "Blogs", "Notes", "Ideas"]).optional(),
     url: z.string().optional(),
     title: z.string().min(1, "Title is required").optional(),
     description: z.string().optional(),
