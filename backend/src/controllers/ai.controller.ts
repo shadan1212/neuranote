@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import Memory from "../models/memory.model";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
+
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // Initialize Gemini client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
+const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 // @desc    Query user's memories with Gemini
 // @route   POST /api/ai/query
@@ -53,12 +55,16 @@ ${context}
 User's Question: ${query}`;
 
     // Make API call to gemini
-    const model = genAI.getGenerativeModel({
+    const respone = await ai.models.generateContent({
       model: "gemini-2.5-flash",
+      contents: [
+        {
+          parts: [{ text: finalPrompt }],
+        },
+      ],
     });
-    const result = await model.generateContent(finalPrompt);
-    const respone = await result.response;
-    const answer = respone.text();
+
+    const answer = respone.text;
 
     res.json({ answer });
   } catch (error) {
