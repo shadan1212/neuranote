@@ -14,6 +14,8 @@ interface MemoryState {
   error: string | null;
   activeFilter: string;
   isModalOpen: boolean;
+  selectedMemory: IMemory | null;
+  setSelectedMemory: (memory: IMemory | null) => void;
   openModal: () => void;
   closeModal: () => void;
   setFilter: (filter: string) => void;
@@ -32,6 +34,7 @@ export const useMemoryStore = create<MemoryState>()(
       error: null,
       activeFilter: "All",
       isModalOpen: false,
+      selectedMemory: null,
 
       // Actions
       setFilter: (filter) => set({ activeFilter: filter }),
@@ -39,6 +42,8 @@ export const useMemoryStore = create<MemoryState>()(
       openModal: () => set({ isModalOpen: true }),
 
       closeModal: () => set({ isModalOpen: false }),
+
+      setSelectedMemory: (memory) => set({ selectedMemory: memory }),
 
       fetchMemories: async () => {
         set({ isLoading: true, error: null });
@@ -76,6 +81,11 @@ export const useMemoryStore = create<MemoryState>()(
             memories: state.memories.map((m) =>
               m._id === id ? updatedMemory : m
             ),
+            selectedMemory:
+              state.selectedMemory?._id === id
+                ? updatedMemory
+                : state.selectedMemory,
+
             isLoading: false,
           }));
         } catch (error: any) {

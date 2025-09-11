@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import { useMemoryStore } from "../store/memoryStore";
-import { X } from "lucide-react";
 import axios from "axios";
 import type { CreateMemoryData } from "../types";
+import type { IMemory } from "../types";
+import toast from "react-hot-toast";
+
+interface AddMemoryModalProps {
+  initialData: IMemory | null;
+  onCancel: () => void;
+}
 
 // A simple debounce utility
 function debounce(func: Function, delay: number) {
@@ -16,8 +22,8 @@ function debounce(func: Function, delay: number) {
 const MEMORY_TYPES = ["Videos", "Posts", "Blogs", "Notes", "Ideas"];
 const URL_REQUIRED_TYPES = ["Videos", "Posts", "Blogs"];
 
-const AddMemoryModal = () => {
-  const { isModalOpen, closeModal, addMemory, error } = useMemoryStore();
+const AddMemoryModal = ({ initialData, onCancel }: AddMemoryModalProps) => {
+  const { editMemory, error, isLoading } = useMemoryStore();
   const [formData, setFormData] = useState({
     type: "Videos",
     url: "",
@@ -29,16 +35,16 @@ const AddMemoryModal = () => {
   const [isScraping, setIsScraping] = useState(false);
 
   useEffect(() => {
-    if (isModalOpen) {
+    if (initialData) {
       setFormData({
-        type: "Videos",
-        url: "",
-        title: "",
-        description: "",
-        tags: "",
+        type: initialData.type || "Videos",
+        url: initialData.url || "",
+        title: initialData.title || "",
+        description: initialData.description || "",
+        tags: (initialData.tags || []).join(", "),
       });
     }
-  }, [isModalOpen]);
+  }, [initialData]);
 
   const handleUrlChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
@@ -84,13 +90,18 @@ const AddMemoryModal = () => {
       url: URL_REQUIRED_TYPES.includes(formData.type) ? formData.url : "",
     };
 
-    await addMemory(memoryData);
-    closeModal();
+    if (initialData?._id) {
+      await editMemory(initialData._id, memoryData);
+      onCancel();
+    } else {
+      console.error("Cannot edit memory without an ID.");
+      toast.error("Could not find memory ID to update.");
+    }
   };
 
   const showUrlField = URL_REQUIRED_TYPES.includes(formData.type);
 
-  if (!isModalOpen) return null;
+  // if (!isModalOpen) return null;
 
   return (
     <div className="font-mono fixed inset-0 bg-black/60 flex items-center justify-center z-50 transition-opacity">
@@ -191,17 +202,22 @@ const AddMemoryModal = () => {
             />
           </div>
           {error && <p className="text-red-700"></p>}
-          <button
-            type="submit"
-            className="px-4 py-2 bg-emerald-600 text-white font-semibold rounded-md hover:bg-emerald-700"
-          >
-            Add Memory
-          </button>
+          <div className="flex justify-end gap-4 pt-4">
+            <button
+              type="button"
+              onClick={onCancel}
+              className="px-4 py-2 text-sm font-medium rounded-md bg-slate-200 hover:bg-slate-300"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-emerald-600 text-white font-semibold rounded-md hover:bg-emerald-700"
+            >
+              {isLoading ? "Updaing Memory..." : "Update Memory"}
+            </button>
+          </div>
         </form>
-        <X
-          onClick={closeModal}
-          className="absolute top-4 right-4 text-black w-6 h-6 cursor-pointer"
-        />
       </div>
     </div>
   );

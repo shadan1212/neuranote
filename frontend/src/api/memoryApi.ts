@@ -17,13 +17,13 @@ export const updateMemory = async (
   id: string,
   memoryData: UpadateMemoryData
 ): Promise<IMemory> => {
-  const response = await api.put(`/${id}`, memoryData);
+  const response = await api.put(`/memory/${id}`, memoryData);
   return response.data;
 };
 
 export const deleteMemory = async (
   id: string
 ): Promise<{ message: string }> => {
-  const response = await api.delete(`/${id}`);
+  const response = await api.delete(`/memory/${id}`);
   return response.data;
 };

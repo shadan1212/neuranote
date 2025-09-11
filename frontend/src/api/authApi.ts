@@ -12,5 +12,5 @@ export const loginUser = async (userData: LoginData): Promise<User> => {
 };
 
 export const logoutUser = async (): Promise<void> => {
-  await api.post("/logout");
+  await api.post("/auth/logout");
 };

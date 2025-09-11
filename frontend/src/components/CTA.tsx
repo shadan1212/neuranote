@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CTA = () => {
   return (
@@ -19,14 +20,12 @@ const CTA = () => {
               Stop losing brilliant ideas. Start capturing, connecting, and
               creating with the power of AI today.
             </p>
-
-            <a
-              href="#" // Make sure this path is correct for your app's routing
-              className="mt-10 inline-flex items-center gap-3 rounded-lg bg-emerald-500 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-transform duration-300 hover:bg-emerald-600 hover:scale-105 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
-            >
-              Start for Free
-              <ArrowRight className="h-5 w-5" />
-            </a>
+            <Link to={"/register"}>
+              <button className="mt-10 inline-flex items-center gap-3 rounded-lg bg-emerald-500 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-transform duration-300 hover:bg-emerald-600 hover:scale-105 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-emerald-400 cursor-pointer">
+                Start for Free
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            </Link>
           </div>
         </div>
       </div>

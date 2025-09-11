@@ -1,5 +1,6 @@
 import { Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -20,9 +21,11 @@ const Hero = () => {
           Your Second Brain learns how you think, and helps you organize,
           recall, and act on your ideas.
         </p>
-        <button className="cursor-pointer rounded-md border border-gray-200 bg-white shadow-md px-5 py-2.5 text-base md:px-6 md:py-3 md:text-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1  hover:shadow-emerald-400/50">
-          Start Building Today
-        </button>
+        <Link to={"/login"}>
+          <button className="cursor-pointer rounded-md border border-gray-200 bg-white shadow-md px-5 py-2.5 text-base md:px-6 md:py-3 md:text-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1  hover:shadow-emerald-400/50">
+            Start Building Today
+          </button>
+        </Link>
       </motion.div>
     </section>
   );

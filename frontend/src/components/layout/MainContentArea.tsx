@@ -1,4 +1,4 @@
-import { Menu, Sparkles, Plus, ExternalLink, BrainCircuit } from "lucide-react";
+import { Menu, Sparkles, Plus, BrainCircuit } from "lucide-react";
 import { useUIStore } from "../../store/uiStore";
 import { useMemoryStore } from "../../store/memoryStore";
 import { format } from "date-fns";
@@ -6,8 +6,14 @@ import { useAuthStore } from "../../store/authStore";
 
 const MainContentArea = () => {
   const { setSidebarOpen, setAiSidebarOpen } = useUIStore();
-  const { memories, activeFilter, isLoading, error, openModal } =
-    useMemoryStore();
+  const {
+    memories,
+    activeFilter,
+    isLoading,
+    error,
+    openModal,
+    setSelectedMemory,
+  } = useMemoryStore();
   const { user } = useAuthStore();
 
   const today = new Date();
@@ -112,6 +118,11 @@ const MainContentArea = () => {
                       {format(new Date(memory.createdAt), "dd-MM-yy")}
                     </span>
                   </div>
+                  <div
+                    className="absolute inset-0 cursor-pointer"
+                    aria-label={`View ${memory.title}`}
+                    onClick={() => setSelectedMemory(memory)} // <-- This is the trigger
+                  ></div>
                 </div>
               ))}
             </div>

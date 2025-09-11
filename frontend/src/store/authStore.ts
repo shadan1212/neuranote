@@ -10,6 +10,8 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  isLoggingOut: boolean;
+  setIsLoggingOut: (status: boolean) => void;
   register: (userData: RegisterData) => Promise<void>;
   login: (userData: LoginData) => Promise<void>;
   logout: () => Promise<void>;
@@ -24,8 +26,10 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: false,
         isLoading: false,
         error: null,
-
+        isLoggingOut: false,
         // Actions
+        setIsLoggingOut: (status) => set({ isLoggingOut: status }),
+
         register: async (userData) => {
           set({ isLoading: true, error: null });
           try {

@@ -10,6 +10,9 @@ import {
 } from "lucide-react";
 import { useMemoryStore } from "../../store/memoryStore";
 import { useUIStore } from "../../store/uiStore";
+import { useAuthStore } from "../../store/authStore";
+import toast from "react-hot-toast";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 // const sections = ["All", "Videos", "Tweets", "Blogs", "Notes", "Ideas"];
 
@@ -43,15 +46,39 @@ const sections = [
 const Sidebar = () => {
   const { activeFilter, setFilter } = useMemoryStore();
   const { isSidebarOpen, setSidebarOpen } = useUIStore();
+  const { logout, setIsLoggingOut } = useAuthStore();
+
+  // const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+
+    <Navigate to={"/"} />;
+    try {
+      const promise = logout();
+
+      await toast.promise(promise, {
+        loading: "Logging out...",
+        success: "Logged out successfully!",
+        error: (err) => err.message || "Failed to logout.",
+      });
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <>
       {/* --- DESKTOP SIDEBAR --- */}
       <aside className="hidden lg:flex flex-col w-64 shrink-0 border-r border-slate-200 bg-white">
-        <div className="p-6 flex items-center justify-center gap-2">
-          <BrainCircuit className="w-5 h-5 font-normal" />
-          <span className="text-xl font-medium">NeuraNote</span>{" "}
-        </div>
+        <Link to={"/dashboard"}>
+          <div className="p-6 flex items-center justify-center gap-2">
+            <BrainCircuit className="w-5 h-5 font-normal" />
+            <span className="text-xl font-medium">NeuraNote</span>{" "}
+          </div>
+        </Link>
         <ul className="p-4">
           {sections.map((section) => (
             <li key={section.title} className="mb-2">
@@ -70,6 +97,14 @@ const Sidebar = () => {
             </li>
           ))}
         </ul>
+        <div className="mt-auto p-4">
+          <button
+            onClick={handleLogout}
+            className="cursor-pointer rounded-md bg-gray-500  text-xs font-medium text-white shadow-md hover:bg-gray-600 transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm"
+          >
+            LogOut
+          </button>
+        </div>
       </aside>
 
       {/* --- MOBILE NAVIGATION SIDEBAR --- */}
@@ -112,6 +147,14 @@ const Sidebar = () => {
               </li>
             ))}
           </ul>
+          <div className="mt-auto p-4">
+            <button
+              onClick={handleLogout}
+              className="cursor-pointer rounded-md bg-gray-500  text-xs font-medium text-white shadow-md hover:bg-gray-600 transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm"
+            >
+              LogOut
+            </button>
+          </div>
         </div>
       </div>
     </>
