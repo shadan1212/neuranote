@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Memory from "../models/memory.model";
 import { GoogleGenAI } from "@google/genai";
+import User from "../models/user.model";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -45,14 +46,22 @@ export const queryAI = async (req: Request, res: Response) => {
       .join("\n\n");
 
     // Final prompt
-    const finalPrompt = `You are a helpful assistant for a "Second Brain" application. Your task is to answer the user's question based ONLY on the context provided below. The context contains all the relevant memories (notes and links) saved by the user. If the answer cannot be found in the context, you MUST state: "I could not find an answer in your memories for this question." Do not use any external knowledge.
+    const finalPrompt = `You are an intelligent personal assistant for a "Second Brain" application. Your purpose is to help the user explore, connect, and reason with their own saved memories. You are their trusted thought partner.
+              Your primary directives are:
+          1.  **Search and Synthesize:** When the user asks a question or describes something, find the most relevant memories from the context provided. Synthesize the information from one or more memories to provide a comprehensive answer.
+          2.  **Brainstorm and Connect:** If the user wants to explore a topic, connect ideas from different memories, even if they aren't obviously related.
+          3.  **Be Conversational:** Engage with the user in a natural, helpful, and collaborative tone.
 
-Context:
+        Rules you MUST follow:
+        - Ground your answers in the provided context ONLY. Do not use external information.
+        - When retrieving information, subtly cite the source memory's title.
+        - If you genuinely cannot find any relevant information, state that you couldn't find anything related in their Second Brain.
+        Context of User's Memories:
 """
 ${context}
 """
 
-User's Question: ${query}`;
+User's Request: ${query}`;
 
     // Make API call to gemini
     const respone = await ai.models.generateContent({
@@ -66,7 +75,13 @@ User's Question: ${query}`;
 
     const answer = respone.text;
 
-    res.json({ answer });
+    const cleanedAnswer = answer?.replace(/\\n\\n/g, " ").replace(/\\"/g, '"');
+
+    await User.findByIdAndUpdate(req.user?._id, {
+      $inc: { aiQueryCount: 1 },
+    });
+
+    res.json({ cleanedAnswer });
   } catch (error) {
     console.error("Error processing AI query:", error);
     res

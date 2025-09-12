@@ -5,6 +5,8 @@ export interface IUser extends Document {
   name: string;
   email: string;
   password?: string;
+  aiQueryCount: number;
+  lastQueryResetDate: Date;
 }
 
 const userSchema: Schema = new Schema(
@@ -22,6 +24,14 @@ const userSchema: Schema = new Schema(
       type: String,
       required: true,
       select: false, // Do not return password by default
+    },
+    aiQueryCount: {
+      type: Number,
+      default: 0,
+    },
+    lastQueryResetDate: {
+      type: Date,
+      default: () => new Date(), // Sets the initial value to now
     },
   },
   {
