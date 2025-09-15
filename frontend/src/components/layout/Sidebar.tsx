@@ -12,7 +12,7 @@ import { useMemoryStore } from "../../store/memoryStore";
 import { useUIStore } from "../../store/uiStore";
 import { useAuthStore } from "../../store/authStore";
 import toast from "react-hot-toast";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 // const sections = ["All", "Videos", "Tweets", "Blogs", "Notes", "Ideas"];
 

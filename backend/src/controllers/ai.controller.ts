@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import Memory from "../models/memory.model";
-import { GoogleGenAI } from "@google/genai";
+import { type Content, GoogleGenAI } from "@google/genai";
 import User from "../models/user.model";
+import { DAILY_LIMIT } from "../config/limit";
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
@@ -12,10 +13,10 @@ const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 // @route   POST /api/ai/query
 // @access  Private
 export const queryAI = async (req: Request, res: Response) => {
-  const { query } = req.body;
+  const { messages } = req.body;
 
-  if (!query) {
-    res.status(400).json({ message: "Query is required" });
+  if (!messages) {
+    res.status(400).json({ message: "Messages are required" });
     return;
   }
 
@@ -45,43 +46,71 @@ export const queryAI = async (req: Request, res: Response) => {
       })
       .join("\n\n");
 
-    // Final prompt
-    const finalPrompt = `You are an intelligent personal assistant for a "Second Brain" application. Your purpose is to help the user explore, connect, and reason with their own saved memories. You are their trusted thought partner.
-              Your primary directives are:
-          1.  **Search and Synthesize:** When the user asks a question or describes something, find the most relevant memories from the context provided. Synthesize the information from one or more memories to provide a comprehensive answer.
-          2.  **Brainstorm and Connect:** If the user wants to explore a topic, connect ideas from different memories, even if they aren't obviously related.
-          3.  **Be Conversational:** Engage with the user in a natural, helpful, and collaborative tone.
+    const history: Content[] = [];
 
-        Rules you MUST follow:
-        - Ground your answers in the provided context ONLY. Do not use external information.
-        - When retrieving information, subtly cite the source memory's title.
-        - If you genuinely cannot find any relevant information, state that you couldn't find anything related in their Second Brain.
-        Context of User's Memories:
-"""
-${context}
-"""
-
-User's Request: ${query}`;
-
-    // Make API call to gemini
-    const respone = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: [
+    history.push({
+      role: "user",
+      parts: [
         {
-          parts: [{ text: finalPrompt }],
+          text: `You are a helpful assistant for a "Second Brain" application. Your task is to answer the user's question based ONLY on the context of their memories, which will be provided first. If the answer cannot be found in the context, you MUST state: "I could not find an answer in your memories for this question." Do not use any external knowledge.Always respond in clean plain text without Markdown, asterisks, or formatting symbols. 
+              Do not bold or italicize text.`,
         },
       ],
     });
 
-    const answer = respone.text;
-
-    const cleanedAnswer = answer?.replace(/\\n\\n/g, " ").replace(/\\"/g, '"');
-
-    await User.findByIdAndUpdate(req.user?._id, {
-      $inc: { aiQueryCount: 1 },
+    history.push({
+      role: "user",
+      parts: [
+        {
+          text: `Here is the complete context of all my memories:\n\n${context}`,
+        },
+      ],
     });
 
-    res.json({ cleanedAnswer });
+    history.push({
+      role: "model",
+      parts: [
+        {
+          text: "Great, I have read all your memories. How can I help you explore them?",
+        },
+      ],
+    });
+
+    for (let i = 0; i < messages.length - 1; i++) {
+      const msg = messages[i];
+      history.push({
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }],
+      });
+    }
+
+    const chatSession = await ai.chats.create({
+      model: "gemini-2.5-flash",
+      history: history,
+    });
+
+    const latestMessage = messages[messages.length - 1].content;
+    const response = await chatSession.sendMessage({
+      message: latestMessage,
+    });
+
+    const answer = response.text;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user?._id,
+      {
+        $inc: { aiQueryCount: 1 },
+      },
+      { new: true }
+    );
+
+    res.json({
+      answer,
+      credits: {
+        used: updatedUser?.aiQueryCount,
+        limit: DAILY_LIMIT,
+      },
+    });
   } catch (error) {
     console.error("Error processing AI query:", error);
     res

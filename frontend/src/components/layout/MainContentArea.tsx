@@ -1,4 +1,4 @@
-import { Menu, Sparkles, Plus, BrainCircuit } from "lucide-react";
+import { Menu, Plus, BrainCircuit, BotMessageSquare } from "lucide-react";
 import { useUIStore } from "../../store/uiStore";
 import { useMemoryStore } from "../../store/memoryStore";
 import { format } from "date-fns";
@@ -40,7 +40,10 @@ const MainContentArea = () => {
     <main className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <header className="lg:hidden flex items-center justify-between p-4 border-b border-slate-200 bg-white sticky top-0 z-10">
         <div className="flex items-center gap-4">
-          <button onClick={() => setSidebarOpen(true)}>
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="cursor-pointer"
+          >
             <Menu className="h-6 w-6" />
           </button>
           <div className="flex items-center gap-2">
@@ -50,8 +53,11 @@ const MainContentArea = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <button onClick={() => setAiSidebarOpen(true)} className="xl:hidden">
-            <Sparkles className="h-6 w-6 text-amber-500" />
+          <button
+            onClick={() => setAiSidebarOpen(true)}
+            className="xl:hidden cursor-pointer"
+          >
+            <BotMessageSquare className="h-6 w-6 text-slate-700" />
           </button>
           <button
             onClick={openModal}

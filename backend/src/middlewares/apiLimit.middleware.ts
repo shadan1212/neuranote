@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import User, { IUser } from "../models/user.model";
+import { DAILY_LIMIT } from "../config/limit";
 
 declare global {
   namespace Express {
@@ -8,8 +9,6 @@ declare global {
     }
   }
 }
-
-const DAILY_LIMIT = 10;
 
 const checkApiLimit = async (
   req: Request,
@@ -42,7 +41,6 @@ const checkApiLimit = async (
         message: `You have reached your daily limit of queries. Please try again tomorrow.`,
       });
     }
-    console.log(user.aiQueryCount);
     next();
   } catch (error) {
     console.error("Error in API limit middleware:", error);

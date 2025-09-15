@@ -2,6 +2,8 @@ export interface User {
   _id: string;
   name: string;
   email: string;
+  aiQueryCount: number;
+  lastQueryResetDate: number;
 }
 
 export type MemoryType = "Videos" | "Posts" | "Blogs" | "Notes" | "Ideas";

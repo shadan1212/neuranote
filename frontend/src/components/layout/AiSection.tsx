@@ -1,51 +1,113 @@
-import { Search, X } from "lucide-react";
+import { Loader2, RotateCw, SendHorizonal, X } from "lucide-react";
 import { useUIStore } from "../../store/uiStore";
+import { useAIStore } from "../../store/aiStore";
+import { useState } from "react";
 
 // --- REUSABLE AI ASSISTANT CONTENT ---
-const AiAssistantContent = () => (
-  <>
-    {/* Header (Fixed) */}
-    <div className="p-8 pb-4">
-      <h3 className="text-lg font-semibold text-slate-900 text-center">
-        {/* <Sparkles className="h-5 w-5 text-amber-500" /> */}
-        AI Assistant
-      </h3>
-      <p className="text-sm text-slate-500 mt-1 text-center">
-        Ask questions about your saved content.
-      </p>
-    </div>
+const AiAssistantContent = () => {
+  const {
+    messages,
+    error,
+    isLoading,
+    askAI,
+    creditLimit,
+    creditUsed,
+    setMessages,
+  } = useAIStore();
+  const [input, setInput] = useState("");
 
-    {/* Chat History (Scrollable) */}
-    <div className="flex-1 overflow-y-auto p-8 pt-4 space-y-4">
-      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-        <p>
-          Hello! I can help you search or answer questions. What would you like
-          to know?
+  const creditsLeft =
+    creditLimit !== null && creditUsed !== null
+      ? creditLimit - creditUsed
+      : null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    askAI(input);
+    setInput("");
+  };
+
+  return (
+    <>
+      {/* Header (Fixed) */}
+      <div className="p-8 pb-4">
+        <button
+          onClick={setMessages}
+          className="text-slate-900 flex justify-start cursor-pointer"
+        >
+          <RotateCw className="h-4 w-4" />
+        </button>
+        <h3 className="text-lg font-semibold text-slate-900 text-center">
+          {/* <Sparkles className="h-5 w-5 text-amber-500" /> */}
+          AI Assistant
+        </h3>
+        <p className="text-sm text-slate-500 mt-1 text-center">
+          Ask questions about your saved content.
+          {creditsLeft !== null && (
+            <p className="text-center text-black">Credits: {creditsLeft}</p>
+          )}
         </p>
       </div>
-      <div className="text-right">
-        <div className="inline-block rounded-lg bg-emerald-600 p-3 text-sm text-white">
-          <p>Tell me about the video on building a second brain.</p>
-        </div>
-      </div>
-      {/* ... More chat messages would go here ... */}
-    </div>
 
-    {/* Input Form (Fixed) */}
-    <div className="p-8 pt-4 border-t border-slate-200">
-      <div className="relative">
-        <textarea
-          rows={3}
-          placeholder="Ask a follow-up..."
-          className="w-full rounded-lg border-slate-300 p-3 pr-12 text-sm focus:border-emerald-500 focus:ring-emerald-500"
-        ></textarea>
-        <button className="absolute bottom-3 right-3 rounded-md bg-emerald-600 p-1.5 text-white hover:bg-emerald-700">
-          <Search className="h-4 w-4" />
-        </button>
+      {/* Chat History (Scrollable) */}
+      <div className="flex-1 overflow-y-auto p-4 pt-4 space-y-4">
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={msg.role === "user" ? "flex justify-end" : ""}
+          >
+            <div
+              className={`inline-block rounded-lg p-3 text-sm ${
+                msg.role === "user"
+                  ? "bg-emerald-50 text-black"
+                  : "bg-slate-50 border border-slate-200 text-slate-700"
+              }`}
+            >
+              <p>{msg.content}</p>
+            </div>
+          </div>
+        ))}
+        {/* Loading Indicator */}
+        {isLoading && (
+          <div>
+            <div className="inline-block rounded-lg p-3 text-sm bg-slate-50 border border-slate-200 text-slate-700">
+              <Loader2 className="h-4 w-4 animate-spin text-slate-500" />
+            </div>
+          </div>
+        )}
+        {/* Error Message */}
+        {error && (
+          <p className="rounded-xl bg-red-50 p-4 text-sm text-red-800 border border-red-200">
+            {error}
+          </p>
+        )}
       </div>
-    </div>
-  </>
-);
+
+      {/* Input Form (Fixed) */}
+      <form
+        onSubmit={handleSubmit}
+        className="p-4 pt-4 border-t border-slate-200"
+      >
+        <div className="relative">
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask a follow-up..."
+            className="w-full resize-none rounded-lg border-slate-300 p-3 pr-12 text-sm focus:outline-none focus:ring focus:ring-emerald-500 focus:border-emerald-500"
+            disabled={isLoading}
+          />
+          <button
+            className="absolute bottom-2 right-3 rounded-md bg-emerald-600 p-1.5 text-white hover:bg-emerald-700 cursor-pointer"
+            disabled={isLoading}
+          >
+            <SendHorizonal className="h-4 w-4" />
+          </button>
+        </div>
+      </form>
+    </>
+  );
+};
 
 const AiSection = () => {
   const { isAiSidebarOpen, setAiSidebarOpen } = useUIStore();
