@@ -25,14 +25,25 @@ const checkApiLimit = async (
       return;
     }
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    const startOfTodayUTC = new Date(
+      Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate(),
+        0,
+        0,
+        0,
+        0
+      )
+    );
 
     // setting the queryCount and Date for a fresh day
-    if (user.lastQueryResetDate < today) {
+    if (!user.lastQueryResetDate || user.lastQueryResetDate < startOfTodayUTC) {
       user.aiQueryCount = 0;
-      user.lastQueryResetDate = today;
+      user.lastQueryResetDate = new Date();
       await user.save();
+      console.log("Query count has been reset for the new day.");
     }
 
     // Check if the user has exceeded their daily limit
