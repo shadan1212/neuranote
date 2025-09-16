@@ -43,7 +43,8 @@ export const useMemoryStore = create<MemoryState>()(
 
       closeModal: () => set({ isModalOpen: false }),
 
-      setSelectedMemory: (memory) => set({ selectedMemory: memory }),
+      setSelectedMemory: (memory) =>
+        set({ selectedMemory: memory, error: null }),
 
       fetchMemories: async () => {
         set({ isLoading: true, error: null });

@@ -8,8 +8,6 @@ const ProtectedRoute = () => {
     return <Outlet />;
   }
 
-  console.log("ProtectedRoute rendering. Is Authenticated?", isAuthenticated);
-
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 

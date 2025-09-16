@@ -100,7 +100,7 @@ const Sidebar = () => {
         <div className="mt-auto p-4">
           <button
             onClick={handleLogout}
-            className="cursor-pointer rounded-md bg-gray-500  text-xs font-medium text-white shadow-md hover:bg-gray-600 transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm"
+            className="cursor-pointer rounded-md bg-slate-800  text-xs font-medium text-white shadow-md sm:px-4 sm:py-2 sm:text-sm"
           >
             LogOut
           </button>
@@ -150,7 +150,7 @@ const Sidebar = () => {
           <div className="mt-auto p-4">
             <button
               onClick={handleLogout}
-              className="cursor-pointer rounded-md bg-gray-500  text-xs font-medium text-white shadow-md hover:bg-gray-600 transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm"
+              className="cursor-pointer rounded-md bg-slate-800  text-xs font-medium text-white shadow-md px-4 py-2 sm:text-sm"
             >
               LogOut
             </button>

@@ -40,6 +40,7 @@ export const useAIStore = create<aiState>((set, get) => ({
             "Hello! I can help you search or answer questions related to your memmories. What would you like to know?",
         },
       ],
+      error: null,
     }),
 
   askAI: async (query) => {

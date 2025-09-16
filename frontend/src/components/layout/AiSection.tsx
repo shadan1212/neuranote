@@ -1,4 +1,10 @@
-import { Loader2, RotateCw, SendHorizonal, X } from "lucide-react";
+import {
+  BotMessageSquare,
+  Loader2,
+  RotateCw,
+  SendHorizonal,
+  X,
+} from "lucide-react";
 import { useUIStore } from "../../store/uiStore";
 import { useAIStore } from "../../store/aiStore";
 import { useState } from "react";
@@ -31,13 +37,19 @@ const AiAssistantContent = () => {
   return (
     <>
       {/* Header (Fixed) */}
-      <div className="p-8 pb-4">
+      <div className="relative p-8 pb-4">
         <button
           onClick={setMessages}
-          className="text-slate-900 flex justify-start cursor-pointer"
+          className="absolute top-2 left-2 text-slate-600 flex justify-start cursor-pointer"
         >
-          <RotateCw className="h-4 w-4" />
+          <RotateCw className="h-5 w-5" />
         </button>
+        <div className="flex justify-center">
+          <button className="px-2 py-1 border border-slate-200 shadow-sm">
+            <BotMessageSquare className="h-6 w-6 text-black" />
+          </button>
+        </div>
+
         <h3 className="text-lg font-semibold text-slate-900 text-center">
           {/* <Sparkles className="h-5 w-5 text-amber-500" /> */}
           AI Assistant
@@ -45,7 +57,11 @@ const AiAssistantContent = () => {
         <p className="text-sm text-slate-500 mt-1 text-center">
           Ask questions about your saved content.
           {creditsLeft !== null && (
-            <p className="text-center text-black">Credits: {creditsLeft}</p>
+            <span className="text-center text-black">
+              {" "}
+              <br />
+              Credits: {creditsLeft}
+            </span>
           )}
         </p>
       </div>

@@ -55,9 +55,9 @@ const MainContentArea = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => setAiSidebarOpen(true)}
-            className="xl:hidden cursor-pointer"
+            className="xl:hidden cursor-pointer px-2 py-1 border border-slate-50 shadow-sm hover:shadow-md transition-shadow duration-300"
           >
-            <BotMessageSquare className="h-6 w-6 text-slate-700" />
+            <BotMessageSquare className="h-6 w-6 text-black" />
           </button>
           <button
             onClick={openModal}
@@ -78,9 +78,9 @@ const MainContentArea = () => {
           </div>
           <button
             onClick={openModal}
-            className="hidden lg:flex items-center gap-2 cursor-pointer rounded-md bg-emerald-600 px-4 py-2 text-xs font-medium text-white shadow-md hover:bg-emerald-700 transition-colors duration-300 sm:px-4 sm:py-2 sm:text-sm"
+            className="hidden lg:flex items-center gap-2 cursor-pointer rounded-md bg-emerald-600 px-4 py-3 text-xs font-medium text-white shadow-md hover:bg-emerald-700 transition-colors duration-300"
           >
-            <Plus className="h-4 w-4" /> Add Memory
+            <Plus className="h-4 w-4" /> <p className="text-base">Add Memory</p>
           </button>
         </div>
 

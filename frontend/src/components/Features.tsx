@@ -1,45 +1,60 @@
-import { Lightbulb, BrainCircuit, Code, Search, Cloud } from "lucide-react";
+import {
+  Lightbulb,
+  BrainCircuit,
+  Code,
+  Search,
+  Cloud,
+  GitMerge,
+  Library,
+  Sparkles,
+  Lock,
+  Brain,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [
   {
-    icon: <Lightbulb className="h-6 w-6 text-teal-600" />,
-    title: "Capture Ideas Instantly",
-    description: "Save notes, thoughts, and tasks in seconds with text.",
-    gradient: "from-teal-100 to-white",
-  },
-  {
-    icon: <BrainCircuit className="h-6 w-6 text-sky-600" />,
-    title: "Smarter Organization",
+    icon: <Library className="h-6 w-6 text-indigo-600" />,
+    title: "Capture Everything",
     description:
-      "Our AI understands your content and auto-organizes it contextually.",
-    gradient: "from-sky-100 to-white",
-  },
-  {
-    icon: <Code className="h-6 w-6 text-indigo-600" />,
-    title: "Integrates With Everything",
-    description: "Sync with your tools – Notion, Google Docs, Slack, and more.",
+      "Save articles, videos, tweets, and notes in one unified library.",
     gradient: "from-indigo-100 to-white",
   },
+
   {
-    icon: <Search className="h-6 w-6 text-amber-600" />,
-    title: "Powerful Semantic Search",
-    description: "Find any note in an instant with natural language search.",
+    icon: <Sparkles className="h-6 w-6 text-amber-600" />,
+    title: "AI Conversations",
+    description:
+      "Ask questions in natural language to get answers from your content.",
     gradient: "from-amber-100 to-white",
   },
   {
-    icon: <Cloud className="h-6 w-6 text-rose-600" />,
-    title: "Cross-Device Sync",
+    icon: <GitMerge className="h-6 w-6 text-emerald-600" />,
+    title: "Uncover Connections",
     description:
-      "Your brain, everywhere. Seamlessly synced across all your devices.",
-    gradient: "from-rose-100 to-white",
+      "Discover links and themes between your notes with AI assistance.",
+    gradient: "from-emerald-100 to-white",
   },
   {
     icon: <Cloud className="h-6 w-6 text-rose-600" />,
-    title: "Cross-Device Sync",
+    title: "Always In Sync",
     description:
-      "Your brain, everywhere. Seamlessly synced across all your devices.",
+      "Access your knowledge on any device. Everything stays up-to-date.",
     gradient: "from-rose-100 to-white",
+  },
+  {
+    icon: <BrainCircuit className="h-6 w-6 text-sky-600" />,
+    title: "Intelligent Processing",
+    description:
+      "Content is auto-analyzed, making it instantly searchable by the AI.",
+    gradient: "from-sky-100 to-white",
+  },
+  {
+    icon: <Lock className="h-6 w-6 text-slate-600" />,
+    title: "Private & Secure",
+    description:
+      "All your content and AI conversations are encrypted and confidential.",
+    gradient: "from-slate-100 to-white",
   },
 ];
 
