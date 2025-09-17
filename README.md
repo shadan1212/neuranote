@@ -103,7 +103,7 @@ Follow these instructions to get the project up and running on your local machin
     PORT=5000
     MONGO_URI=your_mongodb_connection_string
     JWT_SECRET=your_super_secret_jwt_key
-    JWT_EXPIN_IN=30d
+    JWT_EXPIRE_IN=30d
 
     GEMINI_API_KEY=your_google_gemini_api_key
 
@@ -159,8 +159,8 @@ A brief overview of the core API endpoints. All protected routes require a valid
 | :------- | :------------------- | :------------------------------------------- | :------ |
 | `POST`   | `/api/auth/register` | Register a new user                          | Public  |
 | `POST`   | `/api/auth/login`    | Log in a user                                | Public  |
-| `GET`    | `/api/memories`      | Get memories                                 | Private |
-| `POST`   | `/api/memories`      | Create a new memory                          | Private |
-| `PUT`    | `/api/memories/:id`  | Update a memory                              | Private |
-| `DELETE` | `/api/memories/:id`  | Delete a memory                              | Private |
+| `GET`    | `/api/memory`        | Get memories                                 | Private |
+| `POST`   | `/api/memory`        | Create a new memory                          | Private |
+| `PUT`    | `/api/memory/:id`    | Update a memory                              | Private |
+| `DELETE` | `/api/memory/:id`    | Delete a memory                              | Private |
 | `POST`   | `/api/ai/query`      | Start or continue a conversation with the AI | Private |
