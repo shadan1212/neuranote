@@ -14,8 +14,8 @@ const generateToken = (res: Response, userId: mongoose.Types.ObjectId) => {
 
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV !== "development", // Set to true in production
-    sameSite: "strict", // Or 'lax' depending on your needs
+    secure: true, // Set to true in production
+    sameSite: "none", // Or 'lax' depending on your needs
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
 };
