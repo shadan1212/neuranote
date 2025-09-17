@@ -15,10 +15,12 @@ connectDB();
 
 const app: Application = express();
 
+const frontendUrl = process.env.FRONTEND_URL;
+
 // Middlewares
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: frontendUrl,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
