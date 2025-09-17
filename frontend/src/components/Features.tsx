@@ -1,20 +1,9 @@
-import {
-  Lightbulb,
-  BrainCircuit,
-  Code,
-  Search,
-  Cloud,
-  GitMerge,
-  Library,
-  Sparkles,
-  Lock,
-  Brain,
-} from "lucide-react";
+import { Cloud, GitMerge, Library, Sparkles, Lock, Brain } from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [
   {
-    icon: <Library className="h-6 w-6 text-indigo-600" />,
+    icon: <Library className="h-5 w-5 text-indigo-600" />,
     title: "Capture Everything",
     description:
       "Save articles, videos, tweets, and notes in one unified library.",
@@ -22,35 +11,35 @@ const features = [
   },
 
   {
-    icon: <Sparkles className="h-6 w-6 text-amber-600" />,
+    icon: <Sparkles className="h-5 w-5 text-amber-600" />,
     title: "AI Conversations",
     description:
       "Ask questions in natural language to get answers from your content.",
     gradient: "from-amber-100 to-white",
   },
   {
-    icon: <GitMerge className="h-6 w-6 text-emerald-600" />,
+    icon: <GitMerge className="h-5 w-5 text-emerald-600" />,
     title: "Uncover Connections",
     description:
       "Discover links and themes between your notes with AI assistance.",
     gradient: "from-emerald-100 to-white",
   },
   {
-    icon: <Cloud className="h-6 w-6 text-rose-600" />,
+    icon: <Cloud className="h-5 w-5 text-rose-600" />,
     title: "Always In Sync",
     description:
       "Access your knowledge on any device. Everything stays up-to-date.",
     gradient: "from-rose-100 to-white",
   },
   {
-    icon: <BrainCircuit className="h-6 w-6 text-sky-600" />,
+    icon: <Brain className="h-5 w-5 text-sky-600" />,
     title: "Intelligent Processing",
     description:
       "Content is auto-analyzed, making it instantly searchable by the AI.",
     gradient: "from-sky-100 to-white",
   },
   {
-    icon: <Lock className="h-6 w-6 text-slate-600" />,
+    icon: <Lock className="h-5 w-5 text-slate-600" />,
     title: "Private & Secure",
     description:
       "All your content and AI conversations are encrypted and confidential.",
@@ -82,7 +71,7 @@ const Features = () => {
                 className="flex h-full flex-col gap-3 rounded-[11px] bg-white p-6"
               >
                 <div
-                  className={`inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${feature.gradient}`}
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${feature.gradient}`}
                 >
                   {feature.icon}
                 </div>

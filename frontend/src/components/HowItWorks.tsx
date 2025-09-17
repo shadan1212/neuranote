@@ -1,4 +1,4 @@
-import { BrainCircuit, Library, CheckCircle, Brain } from "lucide-react";
+import { Library, CheckCircle, Brain } from "lucide-react";
 
 const HowItWorks = () => {
   return (
@@ -49,7 +49,8 @@ const HowItWorks = () => {
           </div>
           {/* Replaced the dummy form with a clean icon display */}
           <div className="flex h-full min-h-[300px] items-center justify-center rounded-2xl bg-slate-50 p-8 border border-slate-200">
-            <Library className="h-32 w-32 text-indigo-500" strokeWidth={1.5} />
+            <Library className="h-32 w-32 text-indigo-300" strokeWidth={1.5} />
+            <h2 className="font-bold">Collections</h2>
           </div>
         </div>
 
@@ -92,8 +93,9 @@ const HowItWorks = () => {
             </ul>
           </div>
           {/* Replaced the dummy form with a clean icon display */}
-          <div className="flex h-full min-h-[300px] items-center justify-center rounded-2xl bg-slate-50 p-8 border border-slate-200">
-            <Brain className="h-32 w-32 text-emerald-500" strokeWidth={1.5} />
+          <div className="flex h-full min-h-[300px] items-center justify-center gap-3 rounded-2xl bg-slate-50 p-8 border border-slate-200">
+            <Brain className="h-32 w-32 text-emerald-300" strokeWidth={1.5} />
+            <h2 className="font-bold">Gotta Brain</h2>
           </div>
         </div>
       </div>

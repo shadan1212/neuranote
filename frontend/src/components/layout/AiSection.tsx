@@ -106,15 +106,15 @@ const AiAssistantContent = () => {
         className="p-4 pt-4 border-t border-slate-200"
       >
         <div className="relative">
-          <input
+          <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a follow-up..."
-            className="w-full resize-none rounded-lg border-slate-300 p-3 pr-12 text-sm focus:outline-none focus:ring focus:ring-emerald-500 focus:border-emerald-500"
+            className="w-full resize-none rounded-lg border-slate-300 p-3 pr-12 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden focus:outline-none focus:ring focus:ring-emerald-500 focus:border-emerald-500"
             disabled={isLoading}
           />
           <button
-            className="absolute bottom-2 right-3 rounded-md bg-emerald-600 p-1.5 text-white hover:bg-emerald-700 cursor-pointer"
+            className="absolute bottom-3 right-2 rounded-md bg-emerald-600 p-1.5 text-white hover:bg-emerald-700 cursor-pointer"
             disabled={isLoading}
           >
             <SendHorizonal className="h-4 w-4" />
