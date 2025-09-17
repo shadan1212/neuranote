@@ -7,7 +7,6 @@ import connectDB from "./config/db";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes";
 import memoryRoutes from "./routes/memory.routes";
-import dashboardRoutes from "./routes/dashboard.routes";
 import scraperRoutes from "./routes/scraper.route";
 import aiRoutes from "./routes/ai.routes";
 
@@ -32,7 +31,6 @@ app.use(cookieParser());
 // Use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/memory", memoryRoutes);
-app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/scraper", scraperRoutes);
 app.use("/api/ai", aiRoutes);
 
