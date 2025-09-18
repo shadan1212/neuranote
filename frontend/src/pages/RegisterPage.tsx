@@ -57,12 +57,16 @@ const RegisterPage = () => {
             </label>
             <input
               type="password"
+              placeholder="at least 6 characters..."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 bg-gray-700 border border-gray-600 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               required
             />
           </div>
+          {/* <p className="text-white text-sm">
+            Your password must be at least 6 characters long.{" "}
+          </p> */}
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button
             type="submit"
