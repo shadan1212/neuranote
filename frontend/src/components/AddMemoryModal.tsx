@@ -4,6 +4,8 @@ import { X } from "lucide-react";
 import axios from "axios";
 import type { CreateMemoryData } from "../types";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // A simple debounce utility
 function debounce(func: Function, delay: number) {
   let timeout: NodeJS.Timeout;
@@ -52,10 +54,9 @@ const AddMemoryModal = () => {
     setIsScraping(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/scraper/scrape-metadata",
-        { url }
-      );
+      const response = await axios.post(`${API_URL}/scraper/scrape-metadata`, {
+        url,
+      });
 
       const data = response.data;
       if (data.title || data.description) {
